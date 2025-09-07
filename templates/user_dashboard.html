@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<h2>My Milk Deliveries</h2>
+<form method="post" action="{{ url_for('add_delivery') }}">
+    <label>Date</label>
+    <input class="input" type="date" name="date" required value="{{ today }}">
+    <label>Liters</label>
+    <input class="input" type="number" name="liters" min="0" step="0.01" required>
+    <button class="btn btn-success" type="submit">Save</button>
+</form>
+
+<h3>Your Entries</h3>
+<table class="table">
+    <thead>
+        <tr><th>Date</th><th>Liters</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+        {% for d in deliveries %}
+        <tr>
+            <td>{{ d.date }}</td>
+            <td>{{ d.liters }}</td>
+            <td>
+                <form method="post" action="{{ url_for('delete_delivery', delivery_id=d.id) }}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No entries yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

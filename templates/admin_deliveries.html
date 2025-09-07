@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Deliveries{% endblock %}
+{% block content %}
+<h2>Deliveries Breakdown</h2>
+<form method="get">
+    <label>Date</label>
+    <input class="input" type="date" name="date" value="{{ picked_date }}">
+    <button class="btn btn-primary" type="submit">Filter</button>
+</form>
+
+{% if picked_date %}
+<h3>Deliveries for {{ picked_date }}</h3>
+<table class="table">
+    <thead>
+        <tr><th>Customer</th><th>Liters</th></tr>
+    </thead>
+    <tbody>
+        {% for row in breakdown %}
+        <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.liters }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2">No deliveries found for this date.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<h3>Recent Deliveries</h3>
+<table class="table">
+    <thead>
+        <tr><th>Date</th><th>Customer</th><th>Liters</th></tr>
+    </thead>
+    <tbody>
+        {% for d in all_deliveries %}
+        <tr>
+            <td>{{ d.date }}</td>
+            <td>{{ d.name }}</td>
+            <td>{{ d.liters }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No deliveries recorded.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

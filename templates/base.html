@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Milkman Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div><strong>Milkman Manager</strong></div>
+        <div>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('profile') }}">Profile</a>
+                {% if session.get('role') == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('admin_production') }}">Production</a>
+                    <a href="{{ url_for('admin_deliveries') }}">Deliveries</a>
+                {% else %}
+                    <a href="{{ url_for('user_dashboard') }}">My Dashboard</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="card">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const flashes = document.querySelectorAll(".flash");
+            flashes.forEach(flash => {
+                setTimeout(() => {
+                    flash.style.opacity = "0";
+                    flash.style.transition = "opacity 0.5s";
+                    setTimeout(() => flash.remove(), 500);
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>

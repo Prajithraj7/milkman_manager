@@ -1,0 +1,167 @@
+:root {
+    --c1: #d5bdaf;
+    --c2: #e3d5ca;
+    --c3: #f5ebe0;
+    --c4: #d6ccc2;
+    --c5: #edede9;
+    --accent: #7b5e57;
+    --hover: #a67865;
+    --ink: #312a25;
+    --success: #2e7d32;
+    --danger: #b71c1c;
+    --transition-time: 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--c5);
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    perspective: 1000px;
+}
+
+.navbar {
+    background: var(--c2);
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-time);
+}
+
+.navbar:hover {
+    transform: translateZ(5px);
+}
+
+.navbar a {
+    margin-left: 1em;
+    text-decoration: none;
+    color: var(--ink);
+    transition: color var(--transition-time), transform var(--transition-time);
+}
+
+.navbar a:hover {
+    color: var(--hover);
+    transform: translateZ(5px);
+}
+
+.container {
+    max-width: 900px;
+    margin: 2em auto;
+    padding: 1em;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.card {
+    background: white;
+    padding: 1.5em;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform-style: preserve-3d;
+    transition: transform var(--transition-time), box-shadow var(--transition-time);
+}
+
+.card:hover {
+    transform: translateY(-8px) rotateX(5deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.input, select {
+    width: 100%;
+    padding: 0.75em;
+    margin-bottom: 1em;
+    border-radius: 8px;
+    border: 1px solid var(--c4);
+    transition: border-color var(--transition-time), box-shadow var(--transition-time), transform var(--transition-time);
+}
+
+.input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    transform: scale(1.02);
+    outline: none;
+}
+
+.btn {
+    padding: 0.75em 1.5em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background var(--transition-time), transform var(--transition-time), box-shadow var(--transition-time);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--hover);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #1e5c1e;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #8a1212;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.table th, .table td {
+    padding: 0.75em;
+    border: 1px solid var(--c4);
+    text-align: left;
+}
+
+.flash {
+    padding: 1em;
+    border-radius: 8px;
+    margin-bottom: 1em;
+    animation: slideIn 0.5s ease-out;
+}
+
+.flash.success {
+    background: #e0f7e9;
+    border: 1px solid var(--success);
+}
+
+.flash.error {
+    background: #fce4e4;
+    border: 1px solid var(--danger);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
