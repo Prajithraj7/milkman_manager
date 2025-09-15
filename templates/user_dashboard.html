@@ -1,34 +1,76 @@
-{% extends 'base.html' %}
-{% block title %}My Dashboard{% endblock %}
-{% block content %}
-<h2>My Milk Deliveries</h2>
-<form method="post" action="{{ url_for('add_delivery') }}">
-    <label>Date</label>
-    <input class="input" type="date" name="date" required value="{{ today }}">
-    <label>Liters</label>
-    <input class="input" type="number" name="liters" min="0" step="0.01" required>
-    <button class="btn btn-success" type="submit">Save</button>
-</form>
+{% extends "base.html" %}
+{% block title %}My Dashboard - Milkman Manager{% endblock %}
 
-<h3>Your Entries</h3>
-<table class="table">
-    <thead>
-        <tr><th>Date</th><th>Liters</th><th>Action</th></tr>
-    </thead>
-    <tbody>
-        {% for d in deliveries %}
-        <tr>
-            <td>{{ d.date }}</td>
-            <td>{{ d.liters }}</td>
-            <td>
-                <form method="post" action="{{ url_for('delete_delivery', delivery_id=d.id) }}">
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="3">No entries yet.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block content %}
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="login-title">My Milk Deliveries</h1>
+        <p class="login-subtitle">Record and track your daily milk deliveries</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('add_delivery') }}" id="deliveryForm">
+        <div class="form-group">
+            <label for="date" class="form-label">Date</label>
+            <div class="input-icon">
+                <input type="date" id="date" name="date" class="form-input" required value="{{ today }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="liters" class="form-label">Liters</label>
+            <div class="input-icon">
+                <input type="number" id="liters" name="liters" class="form-input" min="0" step="0.01" placeholder="Enter liters delivered" required>
+            </div>
+        </div>
+
+        <button type="submit" class="login-button" id="saveBtn">
+            Save
+        </button>
+    </form>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="color: #4a5568; margin-bottom: 1rem;">Your Entries</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Liters</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in deliveries %}
+                <tr>
+                    <td>{{ d.date }}</td>
+                    <td>{{ d.liters }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('delete_delivery', delivery_id=d.id) }}">
+                            <button class="login-button" style="background: #e53e3e;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #718096;">No entries yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.getElementById('deliveryForm').addEventListener('submit', function(e) {
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.classList.add('loading');
+    });
+</script>
 {% endblock %}

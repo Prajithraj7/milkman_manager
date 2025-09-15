@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Milkman Manager - Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="bg-decoration"></div>
-    
-    <nav class="navbar">
-        <a href="{{ url_for('home') }}" class="logo">Milkman Manager</a>
-        <div class="nav-links">
-            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-            <a href="{{ url_for('register') }}" class="nav-link">Register</a>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
+{% block title %}Milkman Manager - Login{% endblock %}
+
+{% block content %}
     <div class="login-container">
         <div class="login-header">
             <h1 class="login-title">Welcome Back</h1>
@@ -75,7 +61,6 @@
             loginBtn.classList.add('loading');
         });
 
-        // Social login mock handlers
         document.querySelectorAll('.social-button').forEach(btn => {
             btn.addEventListener('click', function() {
                 const platform = this.textContent.trim().split(' ')[1];
@@ -83,5 +68,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

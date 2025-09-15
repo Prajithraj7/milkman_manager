@@ -1,17 +1,62 @@
-{% extends 'base.html' %}
-{% block title %}Profile{% endblock %}
+{% extends "base.html" %}
+{% block title %}Profile - Milkman Manager{% endblock %}
+
 {% block content %}
-<h2>Profile</h2>
-<form method="post">
-    <label>Name</label>
-    <input class="input" type="text" name="name" value="{{ user.name }}" required>
-    <label>Email</label>
-    <input class="input" type="email" name="email" value="{{ user.email }}" required>
-    <h3>Change Password</h3>
-    <label>New Password</label>
-    <input class="input" type="password" name="new_password">
-    <label>Confirm Password</label>
-    <input class="input" type="password" name="confirm_password">
-    <button class="btn btn-primary" type="submit">Save Changes</button>
-</form>
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="login-title">Your Profile</h1>
+        <p class="login-subtitle">Manage your account information and settings</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('profile') }}" id="profileForm">
+        <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <div class="input-icon">
+                <input type="text" id="name" name="name" class="form-input" value="{{ user.name }}" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="input-icon email-icon">
+                <input type="email" id="email" name="email" class="form-input" value="{{ user.email }}" required>
+            </div>
+        </div>
+
+        <h3 style="color: #4a5568; margin-top: 2rem; font-weight: 600;">Change Password</h3>
+
+        <div class="form-group">
+            <label for="new_password" class="form-label">New Password</label>
+            <div class="input-icon password-icon">
+                <input type="password" id="new_password" name="new_password" class="form-input" placeholder="Enter new password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <div class="input-icon password-icon">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Confirm new password">
+            </div>
+        </div>
+
+        <button type="submit" class="login-button" id="saveBtn">
+            Save Changes
+        </button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.classList.add('loading');
+    });
+</script>
 {% endblock %}
